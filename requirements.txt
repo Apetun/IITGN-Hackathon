@@ -57,7 +57,6 @@ six==1.16.0
 smmap==5.0.1
 stockfish==3.28.0
 streamlit==1.36.0
-tabula==1.0.5
 tabula-py==2.9.3
 tenacity==8.4.2
 toml==0.10.2
