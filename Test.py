@@ -1,25 +1,25 @@
-import sqlite3
+from query_handler import handle_query
 
-# Function to generate schema from SQLite database
-def generate_schema(db_file):
-    # Establish connection to SQLite database
-    connection = sqlite3.connect(db_file)
-    cursor = connection.cursor()
 
-    # Query SQLite master table for schema information
-    cursor.execute("SELECT name, sql FROM sqlite_master WHERE type='table';")
-    tables = cursor.fetchall()
+def process_question_file(input_file, output_file):
+    res = []
+    with open(input_file, 'r') as infile:
+        lines = infile.readlines()
+        for line in lines:
+            res.append(line.strip("\n"))
+        
+    out = []
+    for i in range(0,len(res)):
+        print(str(i+1)+")"+res[i])
+        result = handle_query(res[i])
+        print("Answer:"+result[1])
+        out.append(result[1])
+    
+    with open(output_file, 'w') as outfile:
+        for ans in out:
+            outfile.write(ans + '\n')
 
-    # Print schema information
-    for table in tables:
-        table_name = table[0]
-        table_schema = table[1]
-        print(f"Table: {table_name}")
-        print(table_schema)
-        print("\n")
+input_file = './Test/questions.txt'
+output_file = './Test/answers.txt'
 
-    # Close the connection
-    connection.close()
-
-# Example usage
-generate_schema('./working/working.db')
+process_question_file(input_file, output_file)

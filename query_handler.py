@@ -137,7 +137,7 @@ def validate_sql_query(query):
         connection.close()
         return True
     except sqlite3.Error as e:
-        print(f"Invalid SQL query: {e}")
+        print(query)
         return False
 
 
