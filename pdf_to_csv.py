@@ -25,6 +25,7 @@ def parse_company(full_df1):
         "Date of Expiry",
         "Issue Branch Code",
         "Issue Teller",
+        
     ]
     full_df1 = full_df1.drop(columns=columns_to_drop, axis=1)
     full_df1.columns = full_df1.columns.str.replace("\r", " ")
