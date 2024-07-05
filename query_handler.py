@@ -36,10 +36,10 @@ model = genai.GenerativeModel(model_name = "gemini-pro",generation_config = gene
 
 
 prompt_parts_config = [
-  """You are an expert in converting English questions to SQL code that generate a single numeric output. 
+  """You are an expert in converting English questions to SQL code that generate a single numeric output with the correct case based on the example given below. 
     
     Read and understand the below information step by step:
-    Pay attention to the cases and structure of the data values and attribute values.
+    
   
       There are three tables created like this:
       Table: Company
