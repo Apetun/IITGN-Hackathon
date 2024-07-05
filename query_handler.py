@@ -36,96 +36,91 @@ model = genai.GenerativeModel(model_name = "gemini-pro",generation_config = gene
 
 
 prompt_parts_config = [
-  """You are an expert in converting English questions to SQL code that generate a single numeric output with the correct case based on the example given below. 
-    
-    Read and understand the below information step by step:
-    
+  """You are an expert in converting English questions to SQL code that generates a single numeric output with the correct case based on the example given below.
+
+Read and understand the below information step by step:
+
+There are three tables created like this:
+Table: Company
+  CREATE TABLE "Company" (
+  "purchase_date" TEXT,
+  "company" TEXT,
+  "prefix" TEXT,
+  "bond_id" INTEGER,
+  "bond_amount" INTEGER,
+  "status" TEXT
+  )
+
+Table: Political_Party
+  CREATE TABLE "Political_Party" (
+  "cashout_date" TEXT,
+  "political_party" TEXT,
+  "prefix" TEXT,
+  "bond_id" INTEGER,
+  "bond_amount" INTEGER
+  )
+
+Table: Joined_Table
+  CREATE TABLE "Joined_Table" (
+  "purchase_date" TEXT,
+  "company" TEXT,
+  "prefix" TEXT,
+  "bond_id" INTEGER,
+  "bond_amount" INTEGER,
+  "status" TEXT,
+  "cashout_date" TEXT,
+  "political_party" TEXT
+  )
   
-      There are three tables created like this:
-      Table: Company
-        CREATE TABLE "Company" (
-        "purchase_date" TEXT,
-        "company" TEXT,
-        "prefix" TEXT,
-        "bond_id" INTEGER,
-        "bond_amount" INTEGER,
-        "status" TEXT
-        )
+Example Values:
+Company:
+purchase_date,company,prefix,bond_id,bond_amount,status
+12/Apr/2019,A B C INDIA LIMITED,TL,11448,1000000,Paid
+12/Apr/2019,ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED,TL,11555,1000000,Paid
+12/Apr/2019,ARIHANT ENTERPRISES,TL,11554,1000000,Paid
 
+Political_Party:
+cashout_date,political_party,prefix,bond_id,bond_amount
+12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,OC,775,10000000
+12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,TL,10466,1000000
+12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,TL,10423,1000000
 
-        Table: Political_Party
-        CREATE TABLE "Political_Party" (
-        "cashout_date" TEXT,
-        "political_party" TEXT,
-        "prefix" TEXT,
-        "bond_id" INTEGER,
-        "bond_amount" INTEGER
-        )
+Joined_Table:
+purchase_date,company,prefix,bond_id,bond_amount,status,cashout_date,political_party
+12/Apr/2019,A B C INDIA LIMITED,TL,11448,1000000,Paid,25/Apr/2019,BHARATIYA JANATA PARTY
+12/Apr/2019,ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED,TL,11556,1000000,Paid,22/Apr/2019,ALL INDIA TRINAMOOL CONGRESS
+12/Apr/2019,ESSEL MINING AND INDS LTD,OC,6278,10000000,Paid,20/Apr/2019,BHARATIYA JANATA PARTY
 
+Sample Input/Output:
 
-        Table: Joined_Table
-        CREATE TABLE "Joined_Table" (
-        "purchase_date" TEXT,
-        "company" TEXT,
-        "prefix" TEXT,
-        "bond_id" INTEGER,
-        "bond_amount" INTEGER,
-        "status" TEXT,
-        "cashout_date" TEXT,
-        "political_party" TEXT
-        )
-        
-        Example Values:
-        Company:
-        purchase_date,company,prefix,bond_id,bond_amount,status
-        12/Apr/2019,A B C INDIA LIMITED,TL,11448,1000000,Paid
-        12/Apr/2019,ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED,TL,11555,1000000,Paid
-        12/Apr/2019,ARIHANT ENTERPRISES,TL,11554,1000000,Paid
+-- Q1: What is the total bond amount encashed by TELUGU DESAM PARTY on 12th April 2019?
+OUTPUT: SELECT SUM(bond_amount)
+        FROM Political_Party
+        WHERE political_party = 'TELUGU DESAM PARTY'
+        AND cashout_date = '12/Apr/2019';
 
-        Political_Party:
-        cashout_date,political_party,prefix,bond_id,bond_amount
-        12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,OC,775,10000000
-        12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,TL,10466,1000000
-        12/Apr/2019,ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM,TL,10423,1000000
-        
-        Joined_Table:
-        purchase_date,company,prefix,bond_id,bond_amount,status,cashout_date,political_party
-        12/Apr/2019,A B C INDIA LIMITED,TL,11448,1000000,Paid,25/Apr/2019,BHARATIYA JANATA PARTY
-        12/Apr/2019,ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED TL,11556,1000000,Paid,22/Apr/2019,ALL INDIA TRINAMOOL CONGRESS
-        12/Apr/2019,ESSEL MINING AND INDS LTD OC,6278,10000000,Paid,20/Apr/2019,BHARATIYA JANATA PARTY
+-- Q2: What is the total bond amount purchased by CHOUDHARY GARMENTS on 12th April 2019?
+OUTPUT: SELECT SUM(bond_amount)
+        FROM Company
+        WHERE company = 'CHOUDHARY GARMENTS'
+        AND purchase_date = '12/Apr/2019';
 
-        Sample Input/Output:
-        
-        -- Q1: What is the total bond amount encashed by telugu desam party on 12th April 2019?
-        OUTPUT : SELECT SUM(bond_amount)
-                FROM political_party
-                WHERE political_party = 'TELUGU DESAM PARTY'
-                AND cashout_date = '12/Apr/2019';
+-- Q3: What is the total number of bonds purchased by ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED on 12th April 2019?
+OUTPUT: SELECT count(bond_id)
+        FROM Company
+        WHERE company = 'ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED'
+        AND purchase_date = '12/Apr/2019';
 
-        -- Q2: What is the total bond amount purchased by Choudhary garMents on 12th April 2019?
-        OUTPUT:SELECT SUM(bond_amount)
-                      FROM company
-                      WHERE company = 'CHOUDHARY GARMENTS'
-                      AND purchase_date = '12/Apr/2019';
+-- Q4: What is the total amount received by AAM AADMI PARTY from DR. MANDEEP SHARMA in the year 2022?
+OUTPUT: SELECT SUM(bond_amount)
+        FROM Joined_Table
+        WHERE political_party = 'AAM AADMI PARTY'
+        AND company = 'DR. MANDEEP SHARMA'
+        AND cashout_date >= '01/Jan/2022'
+        AND cashout_date <= '31/Dec/2022';
 
-        -- Q3: What is the total number of bonds purchased by Acropolis MAINtenance SERVICES PRIVATE LIMITED on 12th April 2019?
-          OUTPUT:SELECT count(bond_id)
-                FROM company_table
-                WHERE company = 'ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED'
-                AND purchase_date = '12/Apr/2019';
-
-        -- Q4: What is the total amount received by AaM aadmi PARTY from DR. madeep SHARMA in the year 2022?
-          OUTPUT:SELECT SUM(bond_amount)
-                FROM joined_table
-                WHERE political_party = 'AAM AADMI PARTY'
-                AND company = "DR. MANDEEP SHARMA"
-                AND cashout_date >= '01/Jan/2022;'
-                AND cashout_date <= '31/Dec/2022';
-                
-                
-        NOTE : Output should be a valid sql query in a line text format with no errors which can be directly used as a query with no processing.
-        
-                """
+NOTE: Output should be a valid SQL query in a single line text format with no errors, which can be directly used as a query without any processing. Ensure that the case of the company and political party names matches exactly as provided in the input.
+"""
 ]
 
 
