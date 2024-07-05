@@ -137,7 +137,6 @@ def validate_sql_query(query):
         connection.close()
         return True
     except sqlite3.Error as e:
-        print(query)
         return False
 
 
@@ -157,14 +156,22 @@ def handle_query(query):
     results = []    
     genai.configure(api_key = os.getenv("GOOGLE_API_KEY"))
     prompt_parts = [prompt_parts_config[0], query]
+    ctr = 0
     
     while True:
         response = model.generate_content(prompt_parts)
         if validate_sql_query(clean_query(response.text)):
             results.append(clean_query(response.text))
             break
+        ctr+=1
+        if ctr>=7:
+          results.append("No Answer")
+          break
     
     try:
+        if results[0] == "No Answer":
+          results.append("Answer Not Present")
+          return results
         connection = sqlite3.connect("./working/working.db")
         cursor = connection.cursor()
         cursor.execute(results[0])
