@@ -96,13 +96,13 @@ prompt_parts_config = [
 
         Sample Input/Output:
         
-        -- Q1: What is the total bond amount encashed by TELUGU DESAM PARTY on 12th April 2019?
+        -- Q1: What is the total bond amount encashed by telugu desam party on 12th April 2019?
         OUTPUT : SELECT SUM(bond_amount)
                 FROM political_party
                 WHERE political_party = 'TELUGU DESAM PARTY'
                 AND cashout_date = '12/Apr/2019';
 
-        -- Q2: What is the total bond amount purchased by CHOUDHARY GARMENTS on 12th April 2019?
+        -- Q2: What is the total bond amount purchased by Choudhary garMents on 12th April 2019?
         OUTPUT:SELECT SUM(bond_amount)
                       FROM company
                       WHERE company = 'CHOUDHARY GARMENTS'
