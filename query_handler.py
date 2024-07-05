@@ -108,13 +108,13 @@ prompt_parts_config = [
                       WHERE company = 'CHOUDHARY GARMENTS'
                       AND purchase_date = '12/Apr/2019';
 
-        -- Q3: What is the total number of bonds purchased by ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED on 12th April 2019?
+        -- Q3: What is the total number of bonds purchased by Acropolis MAINtenance SERVICES PRIVATE LIMITED on 12th April 2019?
           OUTPUT:SELECT count(bond_id)
                 FROM company_table
                 WHERE company = 'ACROPOLIS MAINTENANCE SERVICES PRIVATE LIMITED'
                 AND purchase_date = '12/Apr/2019';
 
-        -- Q4: What is the total amount received by AAM AADMI PARTY from DR. MANDEEP SHARMA in the year 2022?
+        -- Q4: What is the total amount received by AaM aadmi PARTY from DR. madeep SHARMA in the year 2022?
           OUTPUT:SELECT SUM(bond_amount)
                 FROM joined_table
                 WHERE political_party = 'AAM AADMI PARTY'
