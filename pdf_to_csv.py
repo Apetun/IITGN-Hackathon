@@ -1,7 +1,7 @@
 from tabula import read_pdf
 import pandas as pd
 from csv_to_db import make_db
-
+from csv_to_text import make_text
 
 def convert_to_csv(pdf_docs):
 
@@ -15,6 +15,10 @@ def convert_to_csv(pdf_docs):
     parse_company(pdfs[0])
     parse_party(pdfs[1])
     make_db()
+    for pdf in pdf_docs:
+        file = pdf.replace(".pdf",".csv")
+        make_text(file)
+        
 
 
 def parse_company(full_df1):
