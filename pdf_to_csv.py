@@ -1,5 +1,6 @@
 from tabula import read_pdf
 import pandas as pd
+import os
 from csv_to_db import make_db
 from csv_to_text import make_text
 
@@ -15,9 +16,11 @@ def convert_to_csv(pdf_docs):
     parse_company(pdfs[0])
     parse_party(pdfs[1])
     make_db()
-    for pdf in pdf_docs:
-        file = pdf.replace(".pdf",".csv")
-        make_text(file)
+    
+    all_files = os.listdir("./working")
+    csv_files = [file for file in all_files if file.endswith('.csv')]
+    for csv in csv_files:
+        make_text("./working/"+csv)
         
 
 
@@ -67,3 +70,4 @@ def parse_party(full_df2):
     full_df2 = full_df2.rename(columns={"Denominations": "bond_amount"})
     full_df2 = full_df2.rename(columns={"Prefix": "prefix"})
     full_df2.to_csv("./working/Political_Party.csv", index=False)
+
