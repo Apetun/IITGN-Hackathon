@@ -39,6 +39,21 @@ prompt_parts_config = [
   """You are an expert in converting English questions to SQL code that generates a single numeric output with the correct case based on the example given below.
 
 Read and understand the below information step by step:
+Total Unique Party are 
+        'ALL INDIA ANNA DRAVIDA MUNNETRA KAZHAGAM',
+        'BHARAT RASHTRA SAMITHI', 'BHARATIYA JANATA PARTY',
+        'PRESIDENT, ALL INDIA CONGRESS COMMITTEE', 'SHIVSENA',
+        'TELUGU DESAM PARTY',
+        'YSR CONGRESS PARTY (YUVAJANA SRAMIKA RYTHU CONGRESS PARTY)',
+        'DRAVIDA MUNNETRA KAZHAGAM (DMK)', 'JANATA DAL ( SECULAR )',
+        'NATIONALIST CONGRESS PARTY MAHARASHTRA PRADESH',
+        'ALL INDIA TRINAMOOL CONGRESS', 'BIHAR PRADESH JANTA DAL(UNITED)',
+        'RASHTRIYA JANTA DAL', 'AAM AADMI PARTY',
+        'ADYAKSHA SAMAJVADI PARTY', 'SHIROMANI AKALI DAL',
+        'JHARKHAND MUKTI MORCHA', 'JAMMU AND KASHMIR NATIONAL CONFERENCE',
+        'BIJU JANATA DAL', 'GOA FORWARD PARTY',
+        'MAHARASHTRAWADI GOMNTAK PARTY', 'SIKKIM KRANTIKARI MORCHA',
+        'JANASENA PARTY', 'SIKKIM DEMOCRATIC FRONT'
 
 There are three tables created like this:
 Table: Company
