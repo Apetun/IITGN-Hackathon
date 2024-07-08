@@ -1,3 +1,4 @@
-from text_to_vector import text_to_vector
+from query_handler import handle_query
 
-text_to_vector()
+
+print(handle_query("What is the contribution to All India Congress Committee by Ravinder Agarwal?"))

@@ -19,11 +19,10 @@ def convert_to_csv(pdf_docs):
     
     all_files = os.listdir("./working")
     csv_files = [file for file in all_files if file.endswith('.csv')]
+    if os.path.exists('./working/output.txt'):
+        os.remove('./working/output.txt')
     for csv in csv_files:
         make_text("./working/"+csv)
-        
-
-
 def parse_company(full_df1):
     columns_to_drop = [
         "Sr No.",
@@ -47,8 +46,6 @@ def parse_company(full_df1):
     full_df1 = full_df1.rename(columns={"Prefix": "prefix"})
     full_df1 = full_df1.rename(columns={"Status": "status"})
     full_df1.to_csv("./working/Company.csv", index=False)
-
-
 def parse_party(full_df2):
     columns_to_drop = [
         "Sr No.",

@@ -20,7 +20,6 @@ def make_db():
             """
     joined_df = pd.read_sql(query, connection)
 
-    # Optionally, you can save the joined result back to a new table in the database
     joined_df.to_sql('Joined_Table', connection, if_exists='replace', index=False)
 
 

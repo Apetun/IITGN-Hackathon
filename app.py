@@ -1,6 +1,7 @@
 import streamlit as st
 from pdf_to_csv import convert_to_csv
 from query_handler import handle_query
+from text_to_embedding import text_to_embedding
 import sqlite3
 import pandas as pd
 
@@ -23,9 +24,7 @@ def main():
     <div class="stTextInput" style="padding: 0.5rem; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; background-color: #3b4252;">
     <div>{{MSG}}</div>
     </div>
-    '''
-    
-
+    '''   
     _, cent_co, _ = st.columns(3)
     with cent_co:
         st.image("assets/logo.png", width=250)
@@ -37,26 +36,25 @@ def main():
     if user_question:
         if st.session_state.uploaded_file:
             result = handle_query(user_question)
-            ans = result[1]
             st.write(output1.replace("{{MSG}}",result[0]),unsafe_allow_html=True)
-            st.write(output2.replace("{{MSG}}",ans),unsafe_allow_html=True)
+            st.write(output2.replace("{{MSG}}",result[1]),unsafe_allow_html=True)
         else:
             st.error("Upload/Process Files before prompting")
-
     with st.sidebar:
         st.subheader("Your documents")
         company = st.file_uploader("Upload the Company Data", type="pdf")
         party = st.file_uploader("Upload the Political Party Data", type="pdf")
-
         if st.button("Process"):
             if company and party:
                 st.session_state.process = True
             else:
                 st.session_state.process = False
-
         if st.session_state.process:
-            with st.spinner("Processing"):
+            with st.spinner("Converting to csv and db files"):
                 convert_to_csv([company, party])
+                st.session_state.uploaded_file = True
+            with st.spinner("Making embeddings"):
+                text_to_embedding()
                 st.session_state.uploaded_file = True
 
     if st.session_state.uploaded_file:
