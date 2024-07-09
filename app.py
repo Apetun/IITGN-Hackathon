@@ -7,8 +7,8 @@ import pandas as pd
 
 
 def main():
-    if "uploaded_file" not in st.session_state:
-        st.session_state.uploaded_file = None
+
+    st.session_state.uploaded_file = True
     st.session_state.output = False
     st.session_state.process = False
     st.session_state.output_text = ""
@@ -40,22 +40,7 @@ def main():
             st.write(output2.replace("{{MSG}}",result[1]),unsafe_allow_html=True)
         else:
             st.error("Upload/Process Files before prompting")
-    with st.sidebar:
-        st.subheader("Your documents")
-        company = st.file_uploader("Upload the Company Data", type="pdf")
-        party = st.file_uploader("Upload the Political Party Data", type="pdf")
-        if st.button("Process"):
-            if company and party:
-                st.session_state.process = True
-            else:
-                st.session_state.process = False
-        if st.session_state.process:
-            with st.spinner("Converting to csv and db files"):
-                convert_to_csv([company, party])
-                st.session_state.uploaded_file = True
-            with st.spinner("Making embeddings"):
-                text_to_embedding()
-                st.session_state.uploaded_file = True
+
 
     if st.session_state.uploaded_file:
         st.subheader("Parsed contents of the PDFs")
