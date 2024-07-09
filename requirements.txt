@@ -99,7 +99,6 @@ SQLAlchemy==2.0.31
 stockfish==3.28.0
 streamlit==1.36.0
 sympy==1.12.1
-tabula==1.0.5
 tabula-py==2.9.3
 tbb==2021.13.0
 tenacity==8.4.2
