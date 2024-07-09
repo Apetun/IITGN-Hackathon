@@ -5,6 +5,7 @@ from InstructorEmbedding import INSTRUCTOR
 import torch,os,re,sqlite3,google.generativeai as genai,faiss
 
 
+
 generation_config = {
   "temperature": 0.4,
   "top_p": 1,
@@ -184,4 +185,9 @@ def add_context(query):
   retrieved_docs = retrieve_documents(encoded_query,index,text_chunks)
   
   return formulate_prompt(query,retrieved_docs)
+  
+  
+  
+  
+  
   
