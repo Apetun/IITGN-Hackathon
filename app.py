@@ -58,7 +58,7 @@ def main():
                 st.session_state.uploaded_file = True
 
     if st.session_state.uploaded_file:
-        st.subheader("Contents parsed contents of the PDFs")
+        st.subheader("Parsed contents of the PDFs")
         try:
             conn = sqlite3.connect("./working/working.db")
             query = "SELECT name FROM sqlite_master WHERE type='table';"
