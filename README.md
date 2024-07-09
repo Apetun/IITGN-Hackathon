@@ -1,6 +1,16 @@
 # IITGN-Hackathon
-ACM Summer School 2024 Hackathon
+Tool made for ACM Summer School 2024 Hackathon held in IIT Ghandinagar
 ## Query: a Gemini Backed AI pdf RAG tool for the Electoral Bonds DataSet
+
+
+
+
+
+
+
+
+
+
 ### Installation Guide
 Clone the repository and go to root folder,
 Run the following commands:  
